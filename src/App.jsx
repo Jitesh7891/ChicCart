@@ -11,6 +11,7 @@ import Footer from './components/footer/footer';
 import MyState from './context/data/myState';
 import Login from './pages/registration/login';
 import Signup from './pages/registration/Signup';
+import ProductInfo from './pages/productinfo/ProductInfo';
 
 function App() {
 
@@ -18,7 +19,6 @@ function App() {
     <MyState>
 
       <Router>
-        <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/order" element={<Order/>} />
@@ -26,6 +26,7 @@ function App() {
             <Route path="/cart" element={<Cart/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/signup" element={<Signup/>} />
+            <Route path="/productinfo/:id" element={<ProductInfo/>} />
             <Route path="/*" element={<Nopage/>} />
           </Routes>
       </Router>
