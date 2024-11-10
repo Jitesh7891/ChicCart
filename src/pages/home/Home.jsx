@@ -12,12 +12,12 @@ const Home = (props) => {
   console.log(context);
   
   return (
-        <div>
+        <Layout>
             <HeroSection/>
             <Filter/>
             <ProductCard/>
             <Testimonial/>
-        </div>
+        </Layout>
   )
 }
 

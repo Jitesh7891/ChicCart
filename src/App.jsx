@@ -9,6 +9,8 @@ import Nopage from './pages/nopage/Nopage';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
 import MyState from './context/data/myState';
+import Login from './pages/registration/login';
+import Signup from './pages/registration/Signup';
 
 function App() {
 
@@ -22,9 +24,10 @@ function App() {
             <Route path="/order" element={<Order/>} />
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/cart" element={<Cart/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/signup" element={<Signup/>} />
             <Route path="/*" element={<Nopage/>} />
           </Routes>
-        <Footer/>
       </Router>
 
     </MyState>
