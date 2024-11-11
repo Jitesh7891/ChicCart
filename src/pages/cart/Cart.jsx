@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import myContext from '../../context/data/myContext';
 import Layout from '../../components/layout/Layout';
 import { RiDeleteBinLine } from "react-icons/ri";
+import Modal from '../../components/modal/Modal';
 
 
 function Cart() {
@@ -53,12 +54,8 @@ function Cart() {
             </div>
 
             {/* Buy Now Button */}
-            <button
-              type="button"
-              className="w-full bg-violet-600 hover:bg-violet-700 py-2 text-center rounded-lg text-white font-bold "
-            >
-              Buy Now
-            </button>
+            <Modal/>
+            
           </div>
         </div>
       </div>
