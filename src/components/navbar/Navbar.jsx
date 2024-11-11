@@ -101,7 +101,7 @@ export default function Navbar() {
           Get free delivery on orders over ₹300
         </p>
 
-        <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl " style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
+        <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl " style={{ backgroundColor: mode === 'dark' ? 'rgb(77 83 96)' : '', color: mode === 'dark' ? 'white' : '', }}>
           <div className="">
             <div className="flex h-16 items-center">
               <button

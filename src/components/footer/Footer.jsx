@@ -10,7 +10,7 @@ export default function Footer() {
     return (
         <footer className={`${mode === 'dark' ? 'bg-gray-800' : 'bg-white'} relative`}>
             {/* Wave SVG Separator */}
-            <div className="absolute top-0 left-0 w-full overflow-hidden leading-none" style={{ transform: 'rotate(180deg)' }}>
+            <div className="absolute top-10 left-0 w-full overflow-hidden leading-none" style={{ transform: 'rotate(180deg)' }}>
                 <svg className="relative block w-full h-12" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
                           className={`${mode === 'dark' ? 'fill-gray-500' : 'fill-gray-300'}`}></path>
@@ -18,8 +18,8 @@ export default function Footer() {
             </div>
 
             {/* Main Footer Content */}
-            <div className="container px-5 pt-24 pb-12 mx-auto mt-12">
-                <div className="flex flex-wrap justify-between md:text-left text-center">
+            <div className="container px-5 pt-24 pb-12 mx-auto">
+                <div className="mt-12 flex flex-wrap justify-between md:text-left text-center">
                     {/* Collections Section */}
                     <div className="w-full md:w-1/4 px-4 mb-10 md:mb-0">
                         <h2 className={`font-bold text-xl mb-6 ${mode === 'dark' ? 'text-white' : 'text-gray-900'}`}>

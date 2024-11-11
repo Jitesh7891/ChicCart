@@ -53,7 +53,7 @@ function ProductInfo() {
                          
                             <div className="flex">
                                 <span className={`${mode==='light'?"text-gray-900":"text-white"} title-font font-medium text-2xl`}>
-                                    $47.00
+                                ₹470
                                 </span>
                                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                     Add To Cart
