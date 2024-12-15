@@ -269,11 +269,8 @@ function DashboardTab() {
                         </TabPanel>
                     </Tabs>
                 </div>
-
-
             </div>
         </>
     )
 }
-
 export default DashboardTab;
