@@ -7,9 +7,9 @@ import Filter from '../../components/filter/Filter'
 import ProductCard from '../../components/productcard/ProductCard'
 import Testimonial from '../../components/testinomial/Testinomial'
 
-const Home = (props) => {
+const Home = (props) => {  
+  
   const context=useContext(MyContext)
-  console.log(context);
   
   return (
         <Layout>
