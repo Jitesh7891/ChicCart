@@ -1,11 +1,12 @@
 import { Fragment, useContext, useState } from 'react'
 import { Dialog, Transition, DialogPanel, TransitionChild } from '@headlessui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FiSun } from 'react-icons/fi'
 import myContext from '../../context/data/myContext'
 import { FaMoon } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
+import { toast } from 'react-toastify'
 
 export default function Navbar() {
 
@@ -14,6 +15,15 @@ export default function Navbar() {
 
   const [open, setOpen] = useState(false)
 
+  const user=JSON.parse(localStorage.getItem('user'));
+
+  const navigate=useNavigate();
+
+  const handleLogout=()=>{
+    localStorage.removeItem('user');
+    toast.success("Logout Succesful")
+    navigate('/login')
+  }
 
   return (
     <div className="bg-white sticky top-0 z-50  "  >
@@ -52,23 +62,24 @@ export default function Navbar() {
                   <Link to={'/allproducts'} className=" font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Products
                   </Link>
-                  <div className="flow-root">
+                  {user && <div className="flow-root">
                     <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }} className="-m-2 block p-2 font-medium text-gray-900">
                       Order
                     </Link>
-                  </div>
+                  </div>}
 
-                  <div className="flow-root">
+                  {/* only visible to admin */}
+                  {user?.user?.email==='admin@email.com'?<div className="flow-root">
                     <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Admin
                     </Link>
-                  </div>
+                  </div>:""}
 
-                  <div className="flow-root">
-                    <a className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  {user && <div className="flow-root">
+                    <button onClick={()=>handleLogout()} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Logout
-                    </a>
-                  </div>
+                    </button>
+                  </div>}
                   <div className="flow-root">
                     <Link to={'/'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img
@@ -129,16 +140,18 @@ export default function Navbar() {
                   <Link to={'/allproducts'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Products
                   </Link>
-                  <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  {user && <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Order
-                  </Link>
-                  <Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Admin
-                  </Link>
+                  </Link>}
 
-                  <a className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  {/* only visible to admin */}
+                  {user?.user?.email==='admin@email.com'?<Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Admin
+                  </Link> : ""}
+
+                 {user && <button onClick={()=>handleLogout()} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
-                  </a>
+                  </button>}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">

@@ -53,6 +53,7 @@ function Signup() {
             // Reset the form fields and stop the loading state
             clearFormValues();
             setLoading(false);
+            
 
         } catch (error) {
             console.log(toast)
