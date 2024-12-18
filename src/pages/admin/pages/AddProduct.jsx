@@ -2,11 +2,13 @@ import React, { useContext } from 'react'
 import myContext from '../../../context/data/MyContext'
 import { useRef } from 'react'
 import Loader from "../../../components/loader/Loader"
+import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
 
     const context = useContext(myContext);
     const { addproduct, loading } = context;
+    const navigate=useNavigate()
 
     const productTitle = useRef();
     const productPrice = useRef();
@@ -28,14 +30,9 @@ function AddProduct() {
 
         await addproduct(newProduct);
 
-        productTitle.current.value = ''
-        productPrice.current.value = ''
-        productImageUrl.current.value = ''
-        productCategory.current.value = ''
-        productDescription.current.value = ''
 
         setTimeout(() => {
-            window.location.href="/dashboard"
+            navigate("/dashboard");
         }, 1000);
     }
 

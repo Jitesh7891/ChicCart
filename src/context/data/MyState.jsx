@@ -45,7 +45,7 @@ const MyState = (props) => {
     }
   }
 
-  const [_,setProducts]=useState([]);
+  const [products,setProducts]=useState([]);
 
   const getProductData=async()=>{
     setLoading(true);
@@ -80,7 +80,7 @@ const MyState = (props) => {
   },[])
 
   return (
-    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct}}>
+    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products}}>
          {props.children}
     </MyContext.Provider>
   )

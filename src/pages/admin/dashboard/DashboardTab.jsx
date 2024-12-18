@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext);
-    const { mode } = context;
-
+    const { mode, products} = context;
     const navigate=useNavigate();
 
     const addproduct=()=>{
@@ -89,24 +88,28 @@ function DashboardTab() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className={`${mode==='light'?'bg-gray-50 text-black':'text-white bg-gray-700'} border-b`} >
+                                            {products.map((product,index)=>{
+                                                const {imageUrl,title,price,category,date}=product
+
+                                                return (
+                                                <tr key={index} className={`${mode==='light'?'bg-gray-50 text-black':'text-white bg-gray-700'} border-b`} >
                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    1.
+                                                    {index+1}
                                                 </td>
                                                 <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                    <img className='w-16' src="https://dummyimage.com/720x400" alt="img" />
+                                                    <img className='w-16' src={imageUrl} alt="img" />
                                                 </th>
                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    Title
+                                                    {title}
                                                 </td>
                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    ₹100
+                                                    ₹{price}
                                                 </td>
                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    pots
+                                                    {category}
                                                 </td>
                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    12 Aug 2019
+                                                    {date}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className=" flex gap-2">
@@ -120,7 +123,7 @@ function DashboardTab() {
                                                         </div>
                                                     </div>
                                                 </td>
-                                            </tr>
+                                            </tr>)})}
 
                                         </tbody>
                                     </table>
