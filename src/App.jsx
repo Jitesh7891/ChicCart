@@ -87,7 +87,6 @@ export const ProtectedRouteForAdmin = ({ children }) => {
   if (currentUser && currentUser.user.email === 'admin@email.com') {
     return children;
   } else {
-    toast.error("no")
     return (<Navigate to="/" />);
   }
 };
