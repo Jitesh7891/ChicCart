@@ -4,16 +4,25 @@ import myContext from '../../../context/data/myContext';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { FaUser, FaCartPlus } from 'react-icons/fa';
 import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext);
-    const { mode, products} = context;
-    const navigate=useNavigate();
+    const { mode, products, deleteProduct, updateProduct } = context;
+    const navigate = useNavigate();
 
-    const addproduct=()=>{
+    const addproduct = () => {
         navigate("/addproduct")
     }
+
+    const handleDeleteProduct = async (product) => {
+        const userConfirm = confirm('Are you sure you want to delete product?')
+        if (!userConfirm) return
+
+        await deleteProduct(product);
+
+    }
+
     return (
         <>
             <div className="container mx-auto">
@@ -51,7 +60,7 @@ function DashboardTab() {
                                     <button
                                         type="button"
                                         onClick={addproduct}
-                                        className={`focus:outline-none text-white  shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border ${mode==='light'?'bg-pink-600 hover:bg-pink-700':'bg-gray-700 hover:bg-gray-600'} font-medium rounded-lg text-sm px-5 py-2.5 mb-5 mr-4`}>
+                                        className={`focus:outline-none text-white  shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border ${mode === 'light' ? 'bg-pink-600 hover:bg-pink-700' : 'bg-gray-700 hover:bg-gray-600'} font-medium rounded-lg text-sm px-5 py-2.5 mb-5 mr-4`}>
                                         <div className="flex gap-2 items-center">
                                             Add Product <FaCartPlus size={20} />
                                         </div>
@@ -59,10 +68,10 @@ function DashboardTab() {
                                 </div>
                                 <div className="relative overflow-x-auto ">
                                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400  ">
-                                        <thead  className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`} 
-  style={{ 
-    boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)' 
-  }} >
+                                        <thead className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`}
+                                            style={{
+                                                boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)'
+                                            }} >
                                             <tr>
                                                 <th scope="col" className="px-6 py-3">
                                                     S.No
@@ -88,42 +97,46 @@ function DashboardTab() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {products.map((product,index)=>{
-                                                const {imageUrl,title,price,category,date}=product
+                                            {products.map((product, index) => {
+                                                const { imageUrl, title, price, category, date } = product
 
                                                 return (
-                                                <tr key={index} className={`${mode==='light'?'bg-gray-50 text-black':'text-white bg-gray-700'} border-b`} >
-                                                <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    {index+1}
-                                                </td>
-                                                <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                                    <img className='w-16' src={imageUrl} alt="img" />
-                                                </th>
-                                                <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    {title}
-                                                </td>
-                                                <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    ₹{price}
-                                                </td>
-                                                <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    {category}
-                                                </td>
-                                                <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                    {date}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className=" flex gap-2">
-                                                        <div className=" flex gap-2 cursor-pointer text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                            <div>
-                                                                <AiFillPlusCircle size={20} />
+                                                    <tr key={index} className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
+                                                        <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                            {index + 1}
+                                                        </td>
+                                                        <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
+                                                            <img className='w-16' src={imageUrl} alt="img" />
+                                                        </th>
+                                                        <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                            {title}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                            ₹{price}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                            {category}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                            {date}
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className=" flex gap-2">
+                                                                <div className=" flex gap-2 cursor-pointer text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                                    <Link
+                                                                        to="/updateProduct"
+                                                                        state={{ product }}
+                                                                    >
+                                                                        <AiFillPlusCircle size={20} />
+                                                                    </Link>
+                                                                    <button onClick={() => handleDeleteProduct(product)}>
+                                                                        <AiFillDelete size={20} />
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <AiFillDelete size={20} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>)})}
+                                                        </td>
+                                                    </tr>)
+                                            })}
 
                                         </tbody>
                                     </table>
@@ -135,10 +148,10 @@ function DashboardTab() {
                             <div className="relative overflow-x-auto mb-16">
                                 <h1 className='text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Order Details</h1>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
-                                    <thead className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`} 
-  style={{ 
-    boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)' 
-  }}>
+                                    <thead className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`}
+                                        style={{
+                                            boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)'
+                                        }}>
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
                                                 Payment Id
@@ -176,8 +189,8 @@ function DashboardTab() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                       <tr className={`${mode==='light'?'bg-gray-50 text-black':'text-white bg-gray-700'} border-b`} >
+
+                                        <tr className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
                                             <td className="px-6 py-4">
                                                 #TR89220221
                                             </td>
@@ -218,16 +231,16 @@ function DashboardTab() {
                         </TabPanel>
 
                         {/* User */}
-                        
+
                         <TabPanel>
                             {/* <User addressInfo={addressInfo} setAddressInfo={setAddressInfo} setLoading={setLoading} /> */}
                             <div className="relative overflow-x-auto mb-10">
                                 <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>User Details</h1>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                    <thead className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`} 
-  style={{ 
-    boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)' 
-  }} >
+                                    <thead className={`text-xs ${mode === 'dark' ? 'text-white bg-gray-800' : 'text-black bg-gray-200'} uppercase border border-gray-600`}
+                                        style={{
+                                            boxShadow: mode === 'dark' ? 'inset 0 0 8px rgba(255,255,255,0.2)' : 'inset 0 0 8px rgba(0,0,0,0.6)'
+                                        }} >
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
                                                 S.No
@@ -242,15 +255,15 @@ function DashboardTab() {
                                             <th scope="col" className="px-6 py-3">
                                                 Uid
                                             </th>
-                                           
+
                                         </tr>
                                     </thead>
-                             
-                                  
-                                        <tbody>
-                                       <tr className={`${mode==='light'?'bg-gray-50 text-black':'text-white bg-gray-700'} border-b`} >
+
+
+                                    <tbody>
+                                        <tr className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                               1.
+                                                1.
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                 john doe
@@ -264,7 +277,7 @@ function DashboardTab() {
 
                                         </tr>
                                     </tbody>
-                                    
+
                                 </table>
                             </div>
                         </TabPanel>
