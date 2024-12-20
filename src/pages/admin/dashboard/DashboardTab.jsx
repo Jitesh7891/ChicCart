@@ -9,9 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext);
-    const { mode, products, deleteProduct, updateProduct } = context;
+    const { mode, products, deleteProduct, users } = context;
     const navigate = useNavigate();
-
     const addproduct = () => {
         navigate("/addproduct")
     }
@@ -262,21 +261,23 @@ function DashboardTab() {
 
 
                                     <tbody>
-                                        <tr className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
+                                        {users.map((user,index)=>{
+                                            const {name,email,uid}=user
+                                            return(<tr key={index} className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                1.
+                                                {index+1}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                john doe
+                                                {name}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                johndoe@email.com
+                                                {email}
                                             </td>
                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                28128
+                                                {uid}
                                             </td>
 
-                                        </tr>
+                                        </tr>)})}
                                     </tbody>
 
                                 </table>

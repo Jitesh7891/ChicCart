@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MyContext from './MyContext'
-import { Timestamp, addDoc, collection, onSnapshot, query, orderBy, QuerySnapshot, deleteDoc, setDoc, doc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, onSnapshot, query, orderBy, QuerySnapshot, deleteDoc, setDoc, doc, getDocs } from 'firebase/firestore';
 import { fireDB } from '../../firebase/firebaseConfig';
 import { toast } from 'react-toastify';
 
@@ -8,6 +8,8 @@ const MyState = (props) => {
   
   const [mode,setMode]=useState('light');
   const [loading, setLoading] = useState(false);
+  const [products,setProducts]=useState([]);
+  const [users,setUsers]=useState([]);
   
   //toggle mode between light and dark
   const toggleMode=()=> {
@@ -79,7 +81,6 @@ const MyState = (props) => {
     }
   }
 
-  const [products,setProducts]=useState([]);
 
   //get all products
   const getProductData=async()=>{
@@ -110,12 +111,26 @@ const MyState = (props) => {
     }
   }
 
+  const getUserData=async()=>{
+    try {
+      const result=await getDocs(collection(fireDB,"users"));
+      const userArray=[];
+      result.forEach((doc)=>{
+        userArray.push(doc.data())
+      })
+      setUsers(userArray)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(()=>{
     getProductData();
+    getUserData();
   },[])
 
   return (
-    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products,deleteProduct,updateProduct}}>
+    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products,deleteProduct,updateProduct,users}}>
          {props.children}
     </MyContext.Provider>
   )
