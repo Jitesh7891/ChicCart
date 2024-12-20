@@ -6,6 +6,7 @@ import HeroSection from '../../components/heroSection/HeroSection'
 import Filter from '../../components/filter/Filter'
 import ProductCard from '../../components/productcard/ProductCard'
 import Testimonial from '../../components/testinomial/Testinomial'
+import Banner from '../../components/banner/Banner'
 
 const Home = (props) => {  
   
@@ -17,6 +18,7 @@ const Home = (props) => {
             <Filter/>
             <ProductCard/>
             <Testimonial/>
+            <Banner/>
         </Layout>
   )
 }
