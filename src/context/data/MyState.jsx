@@ -47,11 +47,6 @@ const MyState = (props) => {
     }
   }
 
-
-  const edithandle = (item) => {
-    setProducts(item)
-  }
-
   // update product
   const updateProduct = async (item) => {
     setLoading(true)

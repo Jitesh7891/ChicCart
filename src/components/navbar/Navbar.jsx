@@ -7,10 +7,12 @@ import { FaMoon } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
 
   const context=useContext(myContext)
+  const cartItems=useSelector((state)=>state.cart)
   const { toggleMode, mode } = context
 
   const [open, setOpen] = useState(false)
@@ -20,7 +22,10 @@ export default function Navbar() {
   const navigate=useNavigate();
 
   const handleLogout=()=>{
-    localStorage.removeItem('user');
+    const userConfirm=confirm('Are you sure you want to logout?')
+    if(!userConfirm)return
+
+    window.localStorage.clear()
     toast.success("Logout Succesful")
     navigate('/login')
   }
@@ -189,7 +194,7 @@ export default function Navbar() {
                   <Link to={'/cart'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '', }}>
                   <MdOutlineShoppingCart size={28}/>
 
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>0</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>{cartItems.length}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
                 </div>

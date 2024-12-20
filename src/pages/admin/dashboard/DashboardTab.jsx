@@ -3,7 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import myContext from '../../../context/data/myContext';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { FaUser, FaCartPlus } from 'react-icons/fa';
-import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
+import { AiFillShopping, AiFillDelete } from 'react-icons/ai';
+import { MdModeEditOutline } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
@@ -127,7 +128,7 @@ function DashboardTab() {
                                                                         to="/updateProduct"
                                                                         state={{ product }}
                                                                     >
-                                                                        <AiFillPlusCircle size={20} />
+                                                                        <MdModeEditOutline size={20} />
                                                                     </Link>
                                                                     <button onClick={() => handleDeleteProduct(product)}>
                                                                         <AiFillDelete size={20} />
