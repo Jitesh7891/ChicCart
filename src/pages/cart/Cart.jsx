@@ -67,7 +67,7 @@ function Cart() {
                 <p className="mb-1 text-lg font-bold" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{totalAmount+100}</p>
               </div>
             </div>
-            <Modal/>
+            {localStorage.getItem('cart')?<Modal totalAmount={totalAmount} cartItems={cartItems}/>:<div>No items added to cart</div>}
           </div>
         </div>
       </div>
