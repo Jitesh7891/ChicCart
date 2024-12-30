@@ -9,7 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
     const context = useContext(myContext);
-    const { mode, products, deleteProduct, users } = context;
+    const { mode, products, deleteProduct, users, orders } = context;
+
     const navigate = useNavigate();
     const addproduct = () => {
         navigate("/addproduct")
@@ -157,9 +158,6 @@ function DashboardTab() {
                                                 Payment Id
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Image
-                                            </th>
-                                            <th scope="col" className="px-6 py-3">
                                                 Title
                                             </th>
                                             <th scope="col" className="px-6 py-3">
@@ -167,6 +165,12 @@ function DashboardTab() {
                                             </th>
                                             <th scope="col" className="px-6 py-3">
                                                 Category
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Shipping Charges
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Total Price
                                             </th>
                                             <th scope="col" className="px-6 py-3">
                                                 Name
@@ -190,41 +194,64 @@ function DashboardTab() {
                                     </thead>
                                     <tbody>
 
-                                        <tr className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
+                                        {orders.map((order,idx)=>{
+                                        const {paymentId,totalAmount,userid,email,date,addressInfo,cartItems}=order;
+                                        return(<tr key={idx} className={`${mode === 'light' ? 'bg-gray-50 text-black' : 'text-white bg-gray-700'} border-b`} >
                                             <td className="px-6 py-4">
-                                                #TR89220221
+                                                {paymentId}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <img className="w-10" src="https://dummyimage.com/600x400" alt="img" />
+                                            {cartItems.map((item, idx) => (
+                                                            <span key={idx}>
+                                                                <div>
+                                                                    {item.title}
+                                                                    </div>
+                                                            </span>
+                                                        ))}
                                             </td>
                                             <td className="px-6 py-4">
-                                                Product Name
+                                            {cartItems.map((item, idx) => (
+                                                            <span key={idx}>
+                                                                <div>
+                                                                ₹{item.price}
+                                                                    </div>
+                                                            </span>
+                                                        ))}
                                             </td>
                                             <td className="px-6 py-4">
-                                                ₹500
+                                            {cartItems.map((item, idx) => (
+                                                            <span key={idx}>
+                                                                <div>
+                                                                    {item.category}
+                                                                    </div>
+                                                            </span>
+                                                        ))}
                                             </td>
                                             <td className="px-6 py-4">
-                                                Electronics
+                                            ₹{100}
                                             </td>
                                             <td className="px-6 py-4">
-                                                John Doe
+                                            ₹{totalAmount}
                                             </td>
                                             <td className="px-6 py-4">
-                                                123 Street, City
+                                                {addressInfo.name}
                                             </td>
                                             <td className="px-6 py-4">
-                                                123456
+                                                {addressInfo.address}
                                             </td>
                                             <td className="px-6 py-4">
-                                                +1234567890
+                                                {addressInfo.pincode}
                                             </td>
                                             <td className="px-6 py-4">
-                                                john.doe@example.com
+                                                {addressInfo.phoneNumber}
                                             </td>
                                             <td className="px-6 py-4">
-                                                12 Aug 2019
+                                                {email}
                                             </td>
-                                        </tr>
+                                            <td className="px-6 py-4">
+                                                {date}
+                                            </td>
+                                        </tr>)})}
                                     </tbody>
                                 </table>
                             </div>

@@ -4,7 +4,6 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import MyContext from '../../context/data/myContext';
 import {fireDB} from "../../firebase/firebaseConfig"
 import { addDoc, collection } from 'firebase/firestore';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 const Modal = ({ totalAmount, cartItems }) => {
@@ -61,6 +60,7 @@ const Modal = ({ totalAmount, cartItems }) => {
 
             const orderInfo = {
                 cartItems,
+                totalAmount:totalAmount+100,
                 addressInfo: { name, address, pincode, phoneNumber },
                 date: new Date().toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
                 email: JSON.parse(localStorage.getItem('user'))?.user?.email,
