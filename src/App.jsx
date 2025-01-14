@@ -5,7 +5,7 @@ import Cart from './pages/cart/Cart';
 import Dashboard from './pages/admin/dashboard/Dashboard';
 import Order from './pages/order/Order';
 import Nopage from './pages/nopage/Nopage';
-import MyState from './context/data/myState';
+import MyState from './context/data/MyState';
 import Login from './pages/registration/login';
 import Signup from './pages/registration/Signup';
 import ProductInfo from './pages/productinfo/ProductInfo';
