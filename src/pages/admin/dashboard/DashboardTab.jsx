@@ -161,16 +161,16 @@ function DashboardTab() {
                                                 Title
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Price
-                                            </th>
-                                            <th scope="col" className="px-6 py-3">
                                                 Category
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Shipping Charges
+                                                Price
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Total Price
+                                                Quantity
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Total Price (Includes Shipping Cost)
                                             </th>
                                             <th scope="col" className="px-6 py-3">
                                                 Name
@@ -213,6 +213,15 @@ function DashboardTab() {
                                             {cartItems.map((item, idx) => (
                                                             <span key={idx}>
                                                                 <div>
+                                                                    {item.category}
+                                                                    </div>
+                                                            </span>
+                                                        ))}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                            {cartItems.map((item, idx) => (
+                                                            <span key={idx}>
+                                                                <div>
                                                                 ₹{item.price}
                                                                     </div>
                                                             </span>
@@ -222,13 +231,10 @@ function DashboardTab() {
                                             {cartItems.map((item, idx) => (
                                                             <span key={idx}>
                                                                 <div>
-                                                                    {item.category}
+                                                                {item.quantity}
                                                                     </div>
                                                             </span>
                                                         ))}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                            ₹{100}
                                             </td>
                                             <td className="px-6 py-4">
                                             ₹{totalAmount}
