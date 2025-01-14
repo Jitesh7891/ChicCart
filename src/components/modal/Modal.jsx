@@ -32,7 +32,7 @@ const Modal = ({ totalAmount, cartItems }) => {
         const pincode = pincodeRef.current.value.trim();
         const phoneNumber = phoneNumberRef.current.value.trim();
         try {
-            const response = await fetch('http://localhost:3000/create-payment-intent', {
+            const response = await fetch('https://chiccart-backend.onrender.com/create-payment-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ amount: (totalAmount + 100) * 100 }),
