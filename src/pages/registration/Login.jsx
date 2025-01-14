@@ -14,7 +14,7 @@ function Login() {
     const passRef = useRef();
 
     useEffect(() => {
-        emailRef.current.value = 'admin@email.com';
+        emailRef.current.value = 'user1@email.com';
         passRef.current.value = '123456';
     }, [])
 

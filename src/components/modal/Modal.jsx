@@ -137,6 +137,7 @@ const Modal = ({ totalAmount, cartItems }) => {
                                         Pay
                                     </button>
                                 </form>
+                                <div>To complete paymet view <a className="font-bold" href="https://github.com/Jitesh7891/e-commerce">README file</a></div>
                                 {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
                             </DialogPanel>
                         </div>
