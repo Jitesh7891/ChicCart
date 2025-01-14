@@ -6,7 +6,7 @@ import Dashboard from './pages/admin/dashboard/Dashboard';
 import Order from './pages/order/Order';
 import Nopage from './pages/nopage/Nopage';
 import MyState from './context/data/MyState';
-import Login from './pages/registration/login';
+import Login from './pages/registration/Login';
 import Signup from './pages/registration/Signup';
 import ProductInfo from './pages/productinfo/ProductInfo';
 import AddProduct from './pages/admin/pages/AddProduct';
