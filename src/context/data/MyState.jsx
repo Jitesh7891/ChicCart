@@ -143,7 +143,7 @@ const MyState = (props) => {
       const orderArray = [];
       result.forEach((doc) => orderArray.push(doc.data()));
       setOrders(orderArray);
-      console.log(orderArray)
+      // console.log(orderArray)
     } catch (error) {
       console.log(error);
     }
