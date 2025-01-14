@@ -11,7 +11,7 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 
 function ProductInfo() {
     const context = useContext(myContext);
-    const { loading, setLoading, mode } = context;
+    const { setLoading, mode } = context;
 
     const [products, setProducts] = useState('');
     const params = useParams();

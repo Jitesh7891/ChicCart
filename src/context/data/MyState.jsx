@@ -11,6 +11,11 @@ const MyState = (props) => {
   const [products,setProducts]=useState([]);
   const [users,setUsers]=useState([]);
   const [orders,setOrders]=useState([]);
+
+  //for filters
+  const [searchkey, setSearchkey] = useState('')
+  const [filterType, setFilterType] = useState('')
+  const [filterPrice, setFilterPrice] = useState('')
   
   //toggle mode between light and dark
   const toggleMode=()=> {
@@ -126,18 +131,24 @@ const MyState = (props) => {
     }
   }
 
-  //get all orders
-  const getOrderData=async()=>{
+  const getOrderData = async () => {
     try {
-      const result=await getDocs(collection(fireDB,'orders'));
-      const orderArray=[];
-
-      result.forEach((doc)=>orderArray.push(doc.data()))
-      setOrders(orderArray)
+      const result = await getDocs(
+        query(
+          collection(fireDB, 'orders'),
+          orderBy('date', 'desc')
+        )
+      );
+      
+      const orderArray = [];
+      result.forEach((doc) => orderArray.push(doc.data()));
+      setOrders(orderArray);
+      console.log(orderArray)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+  
 
   useEffect(()=>{
     getProductData();
@@ -146,7 +157,8 @@ const MyState = (props) => {
   },[])
 
   return (
-    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products,deleteProduct,updateProduct,users,orders}}>
+    <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products,deleteProduct,updateProduct,users,orders,searchkey, setSearchkey,filterType, setFilterType,
+      filterPrice, setFilterPrice}}>
          {props.children}
     </MyContext.Provider>
   )
