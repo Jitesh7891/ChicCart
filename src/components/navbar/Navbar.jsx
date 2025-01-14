@@ -64,8 +64,8 @@ export default function Navbar() {
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   
-                  <Link to={'/allproducts'} className=" font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Products
+                  <Link to={'/signup'} className=" font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Signup
                   </Link>
                   {user && <div className="flow-root">
                     <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }} className="-m-2 block p-2 font-medium text-gray-900">
@@ -142,9 +142,9 @@ export default function Navbar() {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
 
-                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Products
-                  </Link>
+                  {!localStorage.getItem('user')  && <Link to={'/signup'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Signup
+                    </Link>}
                   {user && <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Order
                   </Link>}
@@ -194,7 +194,7 @@ export default function Navbar() {
                   <Link to={'/cart'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '', }}>
                   <MdOutlineShoppingCart size={28}/>
 
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>{cartItems.length}</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>{cartItems.reduce((total, item) => total + item.quantity, 0)}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
                 </div>

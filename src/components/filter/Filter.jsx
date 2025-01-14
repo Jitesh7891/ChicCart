@@ -5,6 +5,7 @@ import { CiSearch } from "react-icons/ci";
 const Filter=()=> {
     const context = useContext(myContext)
     const { mode } = context
+    const categories = ['Food', 'Electronics', 'Clothing', 'Books', 'Beauty']; 
 
     return (
         <div>
@@ -36,15 +37,18 @@ const Filter=()=> {
                     <div>
                         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
                             <select className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
-                                <option value="jacket">Jacket</option>
-                                <option value="shirt">Shirt</option>
-                                <option value="mobile">Mobile</option>
+                            <option value="">Select Category</option>
+                            {categories.map((cat) => (
+                                <option key={cat} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
                             </select>
                             <select className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
-                                <option value="100">100</option>
-                                <option value="200">200</option>
-                                <option value="300">300</option>
-                                <option value="400">400</option>
+                                <option value="">Select Maximum Price</option>
+                                <option value="200">100</option>
+                                <option value="300">1000</option>
+                                <option value="400">10000</option>
                             </select>
 
                         </div>

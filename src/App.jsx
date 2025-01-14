@@ -26,6 +26,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/productinfo/:id" element={<ProductInfo />} />
             <Route path="/order" element={
               <ProtectedRoute>
                 <Order />

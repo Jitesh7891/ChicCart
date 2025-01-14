@@ -1,74 +1,98 @@
-import React, { useContext } from 'react'
-import Layout from '../../components/layout/Layout'
-import { FaStar } from "react-icons/fa6";
-import { FaStarHalfStroke } from "react-icons/fa6";
-import { FaFacebookF, FaTwitter, FaHeart  } from "react-icons/fa";
-import { BiSolidMessageRounded } from "react-icons/bi";
-import MyContext from '../../context/data/myContext';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import Layout from '../../components/layout/Layout';
+import myContext from '../../context/data/myContext';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { doc, getDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { addToCart } from '../../redux/cartSlice';
+import { fireDB } from '../../firebase/firebaseConfig';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 
 function ProductInfo() {
-    const {mode}=useContext(MyContext);
-    const { id } = useParams();
+    const context = useContext(myContext);
+    const { loading, setLoading, mode } = context;
+
+    const [products, setProducts] = useState('');
+    const params = useParams();
+
+    const getProductData = async () => {
+        setLoading(true);
+        try {
+            const productTemp = await getDoc(doc(fireDB, "products", params.id));
+            setProducts(productTemp.data());
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getProductData();
+    }, []);
+
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart);
+
+    const addCart = (products) => {
+        dispatch(addToCart(products));
+        toast.success('Added to cart!');
+    };
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-900';
+    const secondaryTextColor = mode === 'dark' ? 'text-gray-400' : 'text-gray-600';
+
     return (
         <Layout>
-            <section className="text-gray-600 body-font overflow-hidden">
-                <div className="container px-5 py-32 mx-auto">
+            <section className={`body-font overflow-hidden ${mode === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+                <div className="container px-5 py-10 mx-auto">
+                    {products && 
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img
                             alt="ecommerce"
-                            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                            src="https://dummyimage.com/400x400"
+                            className="lg:w-1/3 w-full lg:h-auto object-cover object-center rounded"
+                            src={products.imageUrl}
                         />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                            <h2 className={`${mode==='light'?"text-gray-500":"text-gray-300"} text-sm title-font tracking-widest`}>
+                            <h2 className={`text-sm title-font tracking-widest ${secondaryTextColor}`}>
                                 BRAND NAME
                             </h2>
-                            <h1 className={`${mode==='light'?"text-gray-900":"text-white"} text-3xl title-font font-medium mb-1`}>
-                                Product Name {id}
+                            <h1 className={`text-3xl title-font font-medium mb-1 ${textColor}`}>
+                                {products.title}
                             </h1>
-                            <div className=" flex mb-4">
-                                <span className=" flex items-center">
-                                <FaStar size={17} color="#FFD700"/>
-                                <FaStar size={17} color="#FFD700"/>
-                                <FaStar size={17} color="#FFD700"/>
-                                <FaStar size={17} color="#FFD700"/>
-                                <FaStarHalfStroke size={17} color="#FFD700"/>
-                                    <span className={`${mode==='light'?"text-gray-600":"text-gray-400"} ml-3`}>4162  Reviews</span>
-                                </span>
-                                <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-300">
-                  
-                                    {[FaFacebookF, FaTwitter, BiSolidMessageRounded].map((Icon, index) => (
-                                <a key={index} className={`ml-1 transform hover:scale-110 transition-transform duration-200
-                                    ${mode === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
-                                    <Icon className="text-xl" />
-                                </a>
-                            ))}
-                                    
+                            <div className="flex mb-4">
+                                <span className={`flex items-center ${secondaryTextColor}`}>
+                                    {[...Array(5)].map((_, i) => (
+                                        i < 4 ? <FaStar key={i} className="text-indigo-500 w-4 h-4" /> : <FaRegStar key={i} className="text-indigo-500 w-4 h-4" />
+                                    ))}
+                                    <span className={`ml-3 ${secondaryTextColor}`}>4 Reviews</span>
                                 </span>
                             </div>
-                            <p className={`${mode==='light'?"text-gray-500":"text-gray-300"} leading-relaxed border-b-2 mb-5 pb-5`}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore eius incidunt non molestias illo vitae soluta saepe quidem molestiae! Aliquam expedita, sed sunt similique placeat facilis quae fugiat distinctio! Obcaecati veritatis mollitia perferendis repellendus in natus culpa eius repellat modi
+                            <p className={`leading-relaxed border-b-2 mb-5 pb-5 ${secondaryTextColor}`}>
+                                {products.description}
                             </p>
-                         
                             <div className="flex">
-                                <span className={`${mode==='light'?"text-gray-900":"text-white"} title-font font-medium text-2xl`}>
-                                ₹470
+                                <span className={`title-font font-medium text-2xl ${textColor}`}>
+                                    ₹{products.price}
                                 </span>
-                                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                                <button
+                                    onClick={() => addCart(products)}
+                                    className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                                >
                                     Add To Cart
-                                </button>
-                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                                <FaHeart size={17}/>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </section>
-
-        </Layout> 
-    )
+        </Layout>
+    );
 }
 
-export default ProductInfo
+export default ProductInfo;
