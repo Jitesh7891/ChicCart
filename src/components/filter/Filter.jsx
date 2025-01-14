@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import myContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import { CiSearch } from 'react-icons/ci';
 
 const Filter = () => {
-    const context = useContext(myContext);
+    const context = useContext(MyContext);
     const { mode, setSearchkey, setFilterType, setFilterPrice } = context;
 
     const categories = ['Food', 'Electronics', 'Clothing', 'Books', 'Beauty'];

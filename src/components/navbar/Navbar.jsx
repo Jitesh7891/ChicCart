@@ -2,7 +2,7 @@ import { Fragment, useContext, useState } from 'react'
 import { Dialog, Transition, DialogPanel, TransitionChild } from '@headlessui/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiSun } from 'react-icons/fi'
-import myContext from '../../context/data/myContext'
+import MyContext from '../../context/data/MyContext'
 import { FaMoon } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 
 export default function Navbar() {
 
-  const context=useContext(myContext)
+  const context=useContext(MyContext)
   const cartItems=useSelector((state)=>state.cart)
   const { toggleMode, mode } = context
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import myContext from '../../../context/data/myContext';
+import MyContext from '../../../context/data/MyContext';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { FaUser, FaCartPlus } from 'react-icons/fa';
 import { AiFillShopping, AiFillDelete } from 'react-icons/ai';
@@ -8,7 +8,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
 function DashboardTab() {
-    const context = useContext(myContext);
+    const context = useContext(MyContext);
     const { mode, products, deleteProduct, users, orders } = context;
 
     const navigate = useNavigate();

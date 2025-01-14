@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { FaGem, FaHeadset, FaTag } from 'react-icons/fa'
-import myContext from '../../context/data/MyContext'
+import MyContext from '../../context/data/MyContext'
 
 function Banner() {
-    const context = useContext(myContext)
+    const context = useContext(MyContext)
     const { mode } = context
     return (
         <div>

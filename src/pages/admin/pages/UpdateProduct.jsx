@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import myContext from '../../../context/data/myContext'
+import MyContext from '../../../context/data/MyContext'
 import { setDoc, doc } from 'firebase/firestore';
 import { fireDB } from '../../../firebase/firebaseConfig';  
 import {toast} from 'react-toastify';
@@ -8,7 +8,7 @@ import {toast} from 'react-toastify';
 function UpdateProduct() {
   const location = useLocation();
   const navigate = useNavigate();
-  const context=useContext(myContext)
+  const context=useContext(MyContext)
 
   const {updateProduct}=context
 

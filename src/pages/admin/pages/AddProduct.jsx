@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import myContext from '../../../context/data/MyContext';
+import MyContext from '../../../context/data/MyContext';
 import { useRef } from 'react';
 import Loader from '../../../components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
-    const context = useContext(myContext);
+    const context = useContext(MyContext);
     const { addproduct, loading } = context;
     const navigate = useNavigate();
 

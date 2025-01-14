@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import myContext from '../../../context/data/myContext';
+import MyContext from '../../../context/data/MyContext';
 import Layout from '../../../components/layout/Layout';
 import { FaBoxOpen, FaShoppingCart, FaUserTie, FaStar } from 'react-icons/fa';
 import DashboardTab from './DashboardTab';
 
 
 function Dashboard() {
-  const context = useContext(myContext)
+  const context = useContext(MyContext)
   const stats = [
       { count: "5000+", label: "Total Products", icon: <FaBoxOpen size={50} /> },
       { count: "30000+", label: "Total Orders", icon: <FaShoppingCart size={50} /> },

@@ -1,5 +1,5 @@
 import React, { useContext, useReducer } from 'react'
-import myContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import Layout from '../../components/layout/Layout';
 import { RiAddLine, RiSubtractLine, RiDeleteBinLine } from "react-icons/ri";
 import Modal from '../../components/modal/Modal';
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 function Cart() {
 
-  const context = useContext(myContext);
+  const context = useContext(MyContext);
   const dispatch = useDispatch();
 
   const { mode } = context;

@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import myContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
-    const context = useContext(myContext);
+    const context = useContext(MyContext);
     const { mode } = context;
 
     return (

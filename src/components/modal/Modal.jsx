@@ -1,7 +1,7 @@
 import React, { useState, useRef, Fragment, useContext } from 'react';
 import { Dialog, Transition, DialogPanel, TransitionChild, DialogTitle } from '@headlessui/react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import MyContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import {fireDB} from "../../firebase/firebaseConfig"
 import { addDoc, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';

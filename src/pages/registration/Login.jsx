@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
-import MyContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import Loader from '../../components/loader/Loader';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebaseConfig';

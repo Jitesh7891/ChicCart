@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useContext, useRef } from 'react';
-import MyContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import Loader from '../../components/loader/Loader';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, fireDB } from '../../firebase/firebaseConfig';

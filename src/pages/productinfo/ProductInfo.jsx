@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../../components/layout/Layout';
-import myContext from '../../context/data/myContext';
+import MyContext from '../../context/data/MyContext';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
@@ -10,7 +10,7 @@ import { fireDB } from '../../firebase/firebaseConfig';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
 function ProductInfo() {
-    const context = useContext(myContext);
+    const context = useContext(MyContext);
     const { setLoading, mode } = context;
 
     const [products, setProducts] = useState('');
