@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 function ProductCard() {
   const context = useContext(MyContext)
   const { mode, products, searchkey,filterType,filterPrice } = context;
-  console.log(searchkey,filterType,filterPrice)
+
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart);
 

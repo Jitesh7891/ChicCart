@@ -11,6 +11,7 @@ const Modal = ({ totalAmount, cartItems }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    console.log(cartItems.length===0)
     const nameRef = useRef('');
     const addressRef = useRef('');
     const pincodeRef = useRef('');
@@ -85,7 +86,7 @@ const Modal = ({ totalAmount, cartItems }) => {
 
     return (
         <>
-            <button onClick={openModal} className="hover:bg-violet-700 bg-violet-600 text-white py-2 px-4 rounded-lg">
+            <button disabled={cartItems.length===0} onClick={openModal} className="hover:bg-violet-700 bg-violet-600 text-white py-2 px-4 rounded-lg">
                 Buy Now
             </button>
 
@@ -106,7 +107,10 @@ const Modal = ({ totalAmount, cartItems }) => {
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4">
                             <DialogPanel
-                                className={`w-full max-w-lg rounded-2xl p-6 bg-${mode === 'dark' ? 'gray-800' : 'white'} text-${mode === 'dark' ? 'gray-100' : 'gray-900'}`}
+                                className={`w-full max-w-lg rounded-2xl p-6 ${
+                                    mode === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'
+                                  }`}
+                                  
                             >
                                 <DialogTitle as="h2" className="text-xl font-semibold">
                                     Complete Payment
