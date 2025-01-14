@@ -11,7 +11,7 @@ const Modal = ({ totalAmount, cartItems }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    console.log(cartItems.length===0)
+    // console.log(cartItems.length===0)
     const nameRef = useRef('');
     const addressRef = useRef('');
     const pincodeRef = useRef('');

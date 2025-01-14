@@ -64,9 +64,9 @@ export default function Navbar() {
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   
-                  <Link to={'/signup'} className=" font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  {!localStorage.getItem('user') && <Link to={'/signup'} className=" font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Signup
-                  </Link>
+                  </Link>}
                   {user && <div className="flow-root">
                     <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }} className="-m-2 block p-2 font-medium text-gray-900">
                       Order
