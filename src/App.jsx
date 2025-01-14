@@ -25,7 +25,11 @@ function App() {
       <Elements stripe={stripePromise}>
         <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
             <Route path="/productinfo/:id" element={<ProductInfo />} />
             <Route path="/order" element={
               <ProtectedRoute>
