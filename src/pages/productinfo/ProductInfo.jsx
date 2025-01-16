@@ -30,6 +30,7 @@ function ProductInfo() {
 
     useEffect(() => {
         getProductData();
+        window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scroll to top
     }, []);
 
     const dispatch = useDispatch();

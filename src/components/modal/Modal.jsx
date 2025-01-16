@@ -5,11 +5,14 @@ import MyContext from '../../context/data/MyContext';
 import {fireDB} from "../../firebase/firebaseConfig"
 import { addDoc, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Modal = ({ totalAmount, cartItems }) => {
     const { mode } = useContext(MyContext);
     const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const navigate=useNavigate();
 
     // console.log(cartItems.length===0)
     const nameRef = useRef('');
@@ -78,7 +81,7 @@ const Modal = ({ totalAmount, cartItems }) => {
             localStorage.removeItem('cart');
             closeModal();
             toast.success('Payment successful!');
-            window.location.reload();
+            navigate('/')
         } catch (error) {
             setErrorMessage(error.message || 'Something went wrong during payment.');
         }
