@@ -1,12 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../../context/data/MyContext';
 import { CiSearch } from 'react-icons/ci';
 
 const Filter = () => {
     const context = useContext(MyContext);
+    const [inputValue, setInputValue] = useState('');
+
     const { mode, setSearchkey, setFilterType, setFilterPrice } = context;
 
     const categories = ['Food', 'Electronics', 'Clothing', 'Books', 'Beauty'];
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+          setSearchkey(inputValue);
+        }, 300); // debounce delay
+      
+        return () => {
+          clearTimeout(handler); // clear previous timer on input change
+        };
+      }, [inputValue]);
 
     return (
         <div>
@@ -27,13 +39,14 @@ const Filter = () => {
                             name="searchkey"
                             id="searchkey"
                             placeholder="Search here"
-                            onChange={(e) => setSearchkey(e.target.value)}
+                            onChange={(e) => setInputValue(e.target.value)}
                             className="px-8 py-3 w-full rounded-md bg-violet-0 outline-0 text-sm"
                             style={{
                                 backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '',
                                 color: mode === 'dark' ? 'white' : '',
                             }}
                         />
+
                     </div>
                     <div className="flex items-center justify-between mt-4">
                         <p className="font-medium">Filters</p>

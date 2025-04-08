@@ -43,7 +43,7 @@ function Cart() {
                     color: mode === 'dark' ? 'white' : '',
                   }}
                 >
-                  <img src={imageUrl} alt="product-image" className="w-full rounded-lg sm:w-40" />
+                  <img loading="lazy"  src={imageUrl} alt="product-image" className="w-full rounded-lg sm:w-40" />
                   <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                     <div className="mt-5 sm:mt-0">
                       <h2 className="text-lg font-bold text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>{title}</h2>

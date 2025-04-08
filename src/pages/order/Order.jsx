@@ -59,7 +59,7 @@ function Order() {
                         color: mode === 'dark' ? 'white' : 'black'
                       }}>
                         <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-4">
-                          <img 
+                          <img loading="lazy"  
                             src={item.imageUrl} 
                             alt={item.title}
                             className="w-full sm:w-40 h-40 object-cover rounded-lg"

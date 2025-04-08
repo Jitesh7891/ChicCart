@@ -54,7 +54,7 @@ function ProductInfo() {
                 <div className="container px-5 py-10 mx-auto">
                     {products && 
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                        <img
+                        <img loading="lazy" 
                             alt="ecommerce"
                             className="lg:w-1/3 w-full lg:h-auto object-cover object-center rounded"
                             src={products.imageUrl}
