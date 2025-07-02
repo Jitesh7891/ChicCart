@@ -32,8 +32,8 @@ ChicCart is a full-stack e-commerce platform that delivers a complete online sho
 
 ### Frontend Setup
 ```bash
-git clone https://github.com/Jitesh7891/chiccart.git
-cd chiccart
+git clone https://github.com/Jitesh7891/ChicCart.git
+cd ChicCart
 npm install
 npm run dev
 ```
