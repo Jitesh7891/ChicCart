@@ -46,7 +46,6 @@ const MyState = (props) => {
         }),
     });
       toast.success("Product added successfully");
-      await getProductData();
       setLoading(false);
     }
     catch(error){
@@ -61,7 +60,6 @@ const MyState = (props) => {
     try {
       await setDoc(doc(fireDB, "products", item.id), {...item});
       toast.success("Product Updated successfully")
-      getProductData();
       setLoading(false)
     } catch (error) {
       toast.error("Product Updated Failed")
@@ -79,7 +77,6 @@ const MyState = (props) => {
       await deleteDoc(doc(fireDB, "products", item.id));
       toast.success('Product Deleted successfully')
       setLoading(false)
-      getProductData()
     } catch (error) {
       console.log(error)
       toast.error('Product Deleted Falied')
@@ -87,35 +84,6 @@ const MyState = (props) => {
     }
   }
 
-
-  //get all products
-  const getProductData=async()=>{
-    setLoading(true);
-
-    try{
-      const queryResult=query(
-        collection(fireDB,"products"),
-        orderBy("time")
-      )
-
-      const data=onSnapshot(queryResult,(QuerySnapshot)=>{
-        let productsArray=[];
-        QuerySnapshot.forEach((doc)=>{
-          productsArray.push({...doc.data(),id:doc.id})
-        })
-        setProducts(productsArray)
-            // Log products after each update
-            // console.log("Fetched products: ", productsArray);
-        setLoading(false)
-      }
-
-    );
-      return()=>data;
-    }catch(error){
-      setLoading(false);
-      console.log(error)
-    }
-  }
 
   //get all users
   const getUserData=async()=>{
@@ -149,9 +117,23 @@ const MyState = (props) => {
     }
   };
   
+  //get products, subscribe to changes, unsubscribe
+  useEffect(() => {
+  const queryResult = query(collection(fireDB, "products"), orderBy("time"));
+
+  const unsubscribe = onSnapshot(queryResult, (QuerySnapshot) => {
+    let productsArray = [];
+    QuerySnapshot.forEach((doc) => {
+      productsArray.push({ ...doc.data(), id: doc.id });
+    });
+    setProducts(productsArray);
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+}, []);
 
   useEffect(()=>{
-    getProductData();
     getUserData();
     getOrderData();
   },[])
