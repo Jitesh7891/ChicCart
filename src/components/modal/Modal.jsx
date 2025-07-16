@@ -2,19 +2,21 @@ import React, { useState, useRef, Fragment, useContext } from 'react';
 import { Dialog, Transition, DialogPanel, TransitionChild, DialogTitle } from '@headlessui/react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import MyContext from '../../context/data/MyContext';
-import {fireDB} from "../../firebase/firebaseConfig"
+import { fireDB } from "../../firebase/firebaseConfig";
 import { addDoc, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { clearCart } from '../../redux/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const Modal = ({ totalAmount, cartItems }) => {
     const { mode } = useContext(MyContext);
     const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    // console.log(cartItems.length===0)
     const nameRef = useRef('');
     const addressRef = useRef('');
     const pincodeRef = useRef('');
@@ -29,17 +31,18 @@ const Modal = ({ totalAmount, cartItems }) => {
     const handlePayment = async (e) => {
         e.preventDefault();
 
-        if (!stripe || !elements) return; // Ensure Stripe is initialized
+        if (!stripe || !elements) return;
 
         const name = nameRef.current.value.trim();
         const address = addressRef.current.value.trim();
         const pincode = pincodeRef.current.value.trim();
         const phoneNumber = phoneNumberRef.current.value.trim();
+
         try {
             const response = await fetch('https://chiccart-backend.onrender.com/create-payment-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: (totalAmount + 100) * 100 }),
+                body: JSON.stringify({ amount: (totalAmount + 100) * 100 })
             });
 
             const data = await response.json();
@@ -55,16 +58,25 @@ const Modal = ({ totalAmount, cartItems }) => {
                 },
             });
 
+            console.log("Payment Result:", paymentResult);
+
             if (paymentResult.error) {
                 setErrorMessage(paymentResult.error.message);
                 return;
             }
 
-            const paymentId = paymentResult?.paymentIntent?.id;
+            const paymentIntent = paymentResult?.paymentIntent;
+
+            if (!paymentIntent || paymentIntent.status !== 'succeeded') {
+                setErrorMessage('Payment was not successful. Please try again.');
+                return;
+            }
+
+            const paymentId = paymentIntent.id;
 
             const orderInfo = {
                 cartItems,
-                totalAmount:totalAmount+100,
+                totalAmount: totalAmount + 100,
                 addressInfo: { name, address, pincode, phoneNumber },
                 date: new Date().toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
                 email: JSON.parse(localStorage.getItem('user'))?.user?.email,
@@ -74,14 +86,15 @@ const Modal = ({ totalAmount, cartItems }) => {
 
             try {
                 await addDoc(collection(fireDB, 'orders'), orderInfo);
+                dispatch(clearCart())
+                toast.success('Payment successful!');
+                closeModal();
+                navigate('/');
             } catch (error) {
                 console.error('Error saving order:', error);
+                toast.error('Could not save order — please try again.');
             }
 
-            localStorage.removeItem('cart');
-            closeModal();
-            toast.success('Payment successful!');
-            navigate('/')
         } catch (error) {
             setErrorMessage(error.message || 'Something went wrong during payment.');
         }
@@ -89,7 +102,7 @@ const Modal = ({ totalAmount, cartItems }) => {
 
     return (
         <>
-            <button disabled={cartItems.length===0} onClick={openModal} className="hover:bg-violet-700 bg-violet-600 text-white py-2 px-4 rounded-lg">
+            <button disabled={cartItems.length === 0} onClick={openModal} className="hover:bg-violet-700 bg-violet-600 text-white py-2 px-4 rounded-lg">
                 Buy Now
             </button>
 
@@ -109,42 +122,17 @@ const Modal = ({ totalAmount, cartItems }) => {
 
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4">
-                            <DialogPanel
-                                className={`w-full max-w-lg rounded-2xl p-6 ${
-                                    mode === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'
-                                  }`}
-                                  
-                            >
-                                <DialogTitle as="h2" className="text-xl font-semibold">
-                                    Complete Payment
-                                </DialogTitle>
+                            <DialogPanel className={`w-full max-w-lg rounded-2xl p-6 ${mode === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'}`}>
+                                <DialogTitle as="h2" className="text-xl font-semibold">Complete Payment</DialogTitle>
                                 <form onSubmit={handlePayment} className="space-y-6 mt-4">
-                                    <div>
-                                        <label className="block mb-2 text-sm font-medium">Full Name</label>
-                                        <input ref={nameRef} className="w-full border rounded-lg p-2" required />
-                                    </div>
-                                    <div>
-                                        <label className="block mb-2 text-sm font-medium">Address</label>
-                                        <input ref={addressRef} className="w-full border rounded-lg p-2" required />
-                                    </div>
-                                    <div>
-                                        <label className="block mb-2 text-sm font-medium">Pincode</label>
-                                        <input ref={pincodeRef} className="w-full border rounded-lg p-2" required />
-                                    </div>
-                                    <div>
-                                        <label className="block mb-2 text-sm font-medium">Phone Number</label>
-                                        <input ref={phoneNumberRef} className="w-full border rounded-lg p-2" required />
-                                    </div>
+                                    <input ref={nameRef} className="w-full border rounded-lg p-2" placeholder="Full Name" required />
+                                    <input ref={addressRef} className="w-full border rounded-lg p-2" placeholder="Address" required />
+                                    <input ref={pincodeRef} className="w-full border rounded-lg p-2" placeholder="Pincode" required />
+                                    <input ref={phoneNumberRef} className="w-full border rounded-lg p-2" placeholder="Phone Number" required />
                                     <CardElement className="border p-3 rounded-lg" />
-                                    <button
-                                        type="submit"
-                                        disabled={!stripe}
-                                        className="bg-violet-600 text-white px-4 py-2 rounded-lg"
-                                    >
-                                        Pay
-                                    </button>
+                                    <button type="submit" disabled={!stripe} className="bg-violet-600 text-white px-4 py-2 rounded-lg">Pay</button>
                                 </form>
-                                <div>To complete paymet view <a className="font-bold" href="https://github.com/Jitesh7891/e-commerce">README file</a></div>
+                                <div className="text-sm mt-4">To complete payment view <a className="font-bold" href="https://github.com/Jitesh7891/e-commerce">README file</a></div>
                                 {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
                             </DialogPanel>
                         </div>

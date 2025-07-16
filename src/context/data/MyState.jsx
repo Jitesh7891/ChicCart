@@ -98,24 +98,6 @@ const MyState = (props) => {
       console.log(error)
     }
   }
-
-  const getOrderData = async () => {
-    try {
-      const result = await getDocs(
-        query(
-          collection(fireDB, 'orders'),
-          orderBy('date', 'desc')
-        )
-      );
-      
-      const orderArray = [];
-      result.forEach((doc) => orderArray.push(doc.data()));
-      setOrders(orderArray);
-      // console.log(orderArray)
-    } catch (error) {
-      console.log(error);
-    }
-  };
   
   //get products, subscribe to changes, unsubscribe
   useEffect(() => {
@@ -133,10 +115,24 @@ const MyState = (props) => {
   return () => unsubscribe();
 }, []);
 
-  useEffect(()=>{
-    getUserData();
-    getOrderData();
-  },[])
+ useEffect(() => {
+  getUserData();
+}, []);
+
+useEffect(() => {
+  const orderQuery = query(collection(fireDB, 'orders'), orderBy('date', 'desc'));
+
+  const unsubscribe = onSnapshot(orderQuery, (querySnapshot) => {
+    const orderArray = [];
+    querySnapshot.forEach((doc) => {
+      orderArray.push({ ...doc.data(), id: doc.id });
+    });
+    setOrders(orderArray);
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
   return (
     <MyContext.Provider value={{mode,toggleMode,loading,setLoading,addproduct,products,deleteProduct,updateProduct,users,orders,searchkey, setSearchkey,filterType, setFilterType,
